@@ -6,4 +6,4 @@
     android:divider="@android:color/transparent"
     android:dividerHeight="0dp"
     android:background="#cccc"
-    tools:context="org.spaceappschallenge._2014.spacemission.roadmap.mgf.NavigationDrawerFragment" />
+    tools:context="org.spaceappschallenge.spacemission.roadmap.mgf.NavigationDrawerFragment" />

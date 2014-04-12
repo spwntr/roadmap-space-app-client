@@ -1,4 +1,4 @@
-package org.spaceappschallenge._2014.spacemission.roadmap.mgf;
+package org.spaceappschallenge.spacemission.roadmap.mgf;
 
 
 import android.app.ActionBar;
