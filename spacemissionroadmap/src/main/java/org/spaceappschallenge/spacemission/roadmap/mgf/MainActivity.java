@@ -11,12 +11,8 @@ import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.support.v4.widget.DrawerLayout;
 import android.util.Log;
-import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.TextView;
 
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GooglePlayServicesUtil;
@@ -79,11 +75,14 @@ public class MainActivity extends Activity implements NavigationDrawerFragment.N
     }
 
     @Override
-    public void onNavigationDrawerItemSelected(int position) {
+    public void onNavigationDrawerItemSelected(int index) {
         // update the main content by replacing fragments
+
+        Fragment switchToThisFragment = getProperFragmentForDrawerSelection(index + 1);
+
         FragmentManager fragmentManager = getFragmentManager();
         fragmentManager.beginTransaction()
-                .replace(R.id.container, PlaceholderFragment.newInstance(position + 1))
+                .replace(R.id.container, switchToThisFragment)
                 .commit();
     }
 
@@ -108,7 +107,6 @@ public class MainActivity extends Activity implements NavigationDrawerFragment.N
         actionBar.setTitle(mTitle);
     }
 
-
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         if (!mNavigationDrawerFragment.isDrawerOpen()) {
@@ -122,6 +120,7 @@ public class MainActivity extends Activity implements NavigationDrawerFragment.N
         return super.onCreateOptionsMenu(menu);
     }
 
+
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         // Handle action bar item clicks here. The action bar will
@@ -134,45 +133,12 @@ public class MainActivity extends Activity implements NavigationDrawerFragment.N
         return super.onOptionsItemSelected(item);
     }
 
-    /**
-     * A placeholder fragment containing a simple view.
-     */
-    public static class PlaceholderFragment extends Fragment {
-        /**
-         * The fragment argument representing the section number for this
-         * fragment.
-         */
-        private static final String ARG_SECTION_NUMBER = "section_number";
-
-        /**
-         * Returns a new instance of this fragment for the given section
-         * number.
-         */
-        public static PlaceholderFragment newInstance(int sectionNumber) {
-            PlaceholderFragment fragment = new PlaceholderFragment();
-            Bundle args = new Bundle();
-            args.putInt(ARG_SECTION_NUMBER, sectionNumber);
-            fragment.setArguments(args);
-            return fragment;
-        }
-
-        public PlaceholderFragment() {
-        }
-
-        @Override
-        public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                Bundle savedInstanceState) {
-            View rootView = inflater.inflate(R.layout.fragment_main, container, false);
-            TextView textView = (TextView) rootView.findViewById(R.id.section_label);
-            textView.setText(Integer.toString(getArguments().getInt(ARG_SECTION_NUMBER)));
-            return rootView;
-        }
-
-        @Override
-        public void onAttach(Activity activity) {
-            super.onAttach(activity);
-            ((MainActivity) activity).onSectionAttached(
-                    getArguments().getInt(ARG_SECTION_NUMBER));
+    private Fragment getProperFragmentForDrawerSelection(int position) {
+        if (position == 1) {
+            return HomeFragment.newInstance();
+        } else {
+            String arg = position == 2 ? "current" : "previous";
+            return MissionsFragment.newInstance(arg);
         }
     }
 
@@ -321,5 +287,4 @@ public class MainActivity extends Activity implements NavigationDrawerFragment.N
     private void sendRegistrationIdToBackend() {
         //TODO: send registration id to server.
     }
-
 }
