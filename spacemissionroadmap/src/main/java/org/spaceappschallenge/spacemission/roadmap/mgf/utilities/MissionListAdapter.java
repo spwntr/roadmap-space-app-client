@@ -4,7 +4,7 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.BaseAdapter;
+import android.widget.ArrayAdapter;
 
 import org.spaceappschallenge.spacemission.roadmap.mgf.R;
 import org.spaceappschallenge.spacemission.roadmap.mgf.model.Mission;
@@ -12,14 +12,13 @@ import org.spaceappschallenge.spacemission.roadmap.mgf.model.Mission;
 import java.util.ArrayList;
 import java.util.List;
 
-public class MissionListAdapter extends BaseAdapter {
+public class MissionListAdapter extends ArrayAdapter<Mission> {
 
     private List<Mission> postList = new ArrayList<Mission>();
-    private LayoutInflater layoutInflater;
 
-    public MissionListAdapter(Context context, List<Mission> MissionList) {
-        this.layoutInflater = LayoutInflater.from(context);
-        this.postList = postList;
+    public MissionListAdapter(Context context, List<Mission> missionList) {
+        super(context, R.layout.list_row, missionList);
+        this.postList = missionList;
     }
 
     @Override
@@ -39,9 +38,11 @@ public class MissionListAdapter extends BaseAdapter {
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
-        ViewHolder holder = new ViewHolder();
+        ViewHolder holder;
         if (convertView==null) {
+            LayoutInflater layoutInflater = (LayoutInflater) getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
             convertView = layoutInflater.inflate(R.layout.list_row, null);
+            holder = new ViewHolder();
             holder.getViewsById(convertView);
             convertView.setTag(holder);
         } else {
