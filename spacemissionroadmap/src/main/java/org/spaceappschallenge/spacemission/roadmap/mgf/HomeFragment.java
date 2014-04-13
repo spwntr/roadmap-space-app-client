@@ -2,14 +2,30 @@ package org.spaceappschallenge.spacemission.roadmap.mgf;
 
 import android.app.Fragment;
 import android.app.FragmentManager;
+import android.app.ProgressDialog;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.Window;
 import android.widget.Button;
+import android.widget.ProgressBar;
+
+import org.spaceappschallenge.spacemission.roadmap.mgf.model.Mission;
+import org.spaceappschallenge.spacemission.roadmap.mgf.model.Missions;
+import org.spaceappschallenge.spacemission.roadmap.mgf.network.SpaceMissionRoadmapAPIClient;
+
+import java.util.List;
+
+import retrofit.Callback;
+import retrofit.RetrofitError;
+import retrofit.client.Response;
 
 
 public class HomeFragment extends Fragment {
+
+    private static final String TAG = HomeFragment.class.getSimpleName();
 
 
     public static HomeFragment newInstance() {
@@ -35,8 +51,43 @@ public class HomeFragment extends Fragment {
         btn_current_missions.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String category = "current";
-                setFragment(category);
+
+                final String category = "current";
+
+                SpaceMissionRoadmapAPIClient apiClient = ((MainActivity) getActivity()).getAPIClient();
+
+                final ProgressDialog dialog = new ProgressDialog(getActivity());
+
+                dialog.setTitle(null);
+                dialog.setCancelable(false);
+                dialog.setCanceledOnTouchOutside(false);
+                dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+                dialog.setContentView(new ProgressBar(getActivity(), null, android.R.attr.progressBarStyleLarge));
+
+                apiClient.getCurrentMissionData(new Callback<Missions>() {
+                    @Override
+                    public void success(Missions missions, Response response) {//TODO: persist data
+
+                        dialog.dismiss();
+
+
+                        setFragment(category, missions.missions);
+                    }
+
+                    @Override
+                    public void failure(RetrofitError error) {//TODO: better error handling
+
+                        dialog.dismiss();
+
+                        Log.e(TAG, "Could not retrieve current missions from server.");
+
+                        if (error != null){
+                            Log.e(TAG, error.toString());
+                        }
+                    }
+
+                });
+
             }
         });
 
@@ -45,21 +96,22 @@ public class HomeFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 String category = "previous";
-                setFragment(category);
+                setFragment(category, null);
             }
         });
 
         return rootView;
     }
 
-    private void setFragment(String category) {
-        Fragment switchToThisFragment = MissionsFragment.newInstance(category);
+    private void setFragment(final String category, final List<Mission> missions) {
+
+        Fragment switchToThisFragment = MissionsFragment.newInstance(category, missions);
 
         FragmentManager fragmentManager = getFragmentManager();
         fragmentManager.beginTransaction()
                 .addToBackStack(null)
                 .replace(R.id.container, switchToThisFragment)
-                .commit();
+                .commitAllowingStateLoss();//TODO: should not perform transaction after network call as activity's state may have changed
     }
 
     @Override

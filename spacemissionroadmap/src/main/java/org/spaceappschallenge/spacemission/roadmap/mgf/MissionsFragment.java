@@ -14,6 +14,7 @@ import org.spaceappschallenge.spacemission.roadmap.mgf.model.Mission;
 import org.spaceappschallenge.spacemission.roadmap.mgf.service.DataSource;
 import org.spaceappschallenge.spacemission.roadmap.mgf.utilities.MissionListAdapter;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class MissionsFragment extends Fragment {
@@ -21,11 +22,13 @@ public class MissionsFragment extends Fragment {
     private String category;
     private ListView listView;
     private String actionbarTitle;
+    private List<Mission> missionList = new ArrayList<Mission>();
 
-    public static MissionsFragment newInstance(String category) {
+    public static MissionsFragment newInstance(String category, List<Mission> missionList) {
         MissionsFragment fragment = new MissionsFragment();
         Bundle bundle = new Bundle();
         bundle.putString("category", category);
+        bundle.putParcelableArrayList("missions", (ArrayList<Mission>) missionList);
         fragment.setArguments(bundle);
         return fragment;
     }
@@ -35,9 +38,16 @@ public class MissionsFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-            category = getArguments().getString("category");
+
+        final Bundle bundle = getArguments();
+
+        if (bundle != null) {
+
+            category = bundle.getString("category");
+            missionList = bundle.getParcelableArrayList("missions");
+
         }
+
     }
 
     @Override
@@ -74,7 +84,17 @@ public class MissionsFragment extends Fragment {
     }
 
     private List<Mission> getData(){
-        return new DataSource().getMissions(category);
+
+        final List<Mission> missions = new ArrayList<Mission>();
+
+       if(!category.equalsIgnoreCase("current") || missionList == null){
+           missions.addAll(new DataSource().getMissions(category));//TODO: Change to fetch actual data. Returns fake data for past missions for now.
+       } else {
+           missions.addAll(missionList);
+       }
+
+        return missions;
+
     }
 
 }
