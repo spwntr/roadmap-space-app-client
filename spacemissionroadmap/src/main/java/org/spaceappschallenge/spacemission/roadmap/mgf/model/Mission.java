@@ -78,7 +78,7 @@ public class Mission implements Parcelable {
 
     }
 
-    static class MissionDate {
+    public static class MissionDate {
         public String start;
         public String end;
     }
