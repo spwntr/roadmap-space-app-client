@@ -21,6 +21,7 @@ import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.NotificationCompat;
 import android.util.Log;
@@ -67,11 +68,20 @@ public class GcmIntentService extends IntentService {
                 sendNotification("Deleted messages on server: " + extras.toString());
                 // If it's a regular GCM message, do some work.
             } else if (GoogleCloudMessaging.MESSAGE_TYPE_MESSAGE.equals(messageType)) {
-                // TODO: Parse message here
+                /*
+                *   {
+                *       "eventTitle" : "Apollo 13 Launch tomorrow",
+                *       "subtext" : "Watch live on NBC"
+                *       "url" : "http://google.com"
+                *   }
+                * */
+                String eventTitle = extras.get("eventTitle").toString();
+                String subtext = extras.get("subtext").toString();
+                String url = extras.get("url").toString();
 
-                // Post notification of received message.
-                sendNotification("Received: " + extras.toString());
-                Log.i(TAG, "Received: " + extras.toString());
+                String notification = eventTitle + "|" + subtext + "|" + url;
+                sendNotification(notification);
+                Log.i(TAG, notification);
             }
         }
         // Release the wake lock provided by the WakefulBroadcastReceiver.
@@ -81,20 +91,21 @@ public class GcmIntentService extends IntentService {
     // Put the message into a notification and post it.
     // This is just one simple example of what you might choose to do with
     // a GCM message.
-    private void sendNotification(String msg) {//TODO: build event message
+    private void sendNotification(String msg) {
+        String[] notification = msg.split("|");
         mNotificationManager = (NotificationManager)
                 this.getSystemService(Context.NOTIFICATION_SERVICE);
 
         PendingIntent contentIntent = PendingIntent.getActivity(this, 0,
-                new Intent(this, MainActivity.class), 0);
+                new Intent(Intent.ACTION_VIEW, Uri.parse(notification[2])), 0);
 
         NotificationCompat.Builder mBuilder =
                 new NotificationCompat.Builder(this)
                         .setSmallIcon(R.drawable.ic_stat_gcm)
-                        .setContentTitle("Space Event Notification")
+                        .setContentTitle(notification[0])
                         .setStyle(new NotificationCompat.BigTextStyle()
-                                .bigText(msg))
-                        .setContentText(msg);
+                                .bigText(notification[0]))
+                        .setContentText(notification[1]);
 
         mBuilder.setContentIntent(contentIntent);
         mNotificationManager.notify(NOTIFICATION_ID, mBuilder.build());
