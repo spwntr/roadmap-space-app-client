@@ -16,7 +16,12 @@ import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GooglePlayServicesUtil;
 import com.google.android.gms.gcm.GoogleCloudMessaging;
 
+import org.spaceappschallenge.spacemission.roadmap.mgf.network.SpaceMissionRoadmapAPIClient;
+import org.spaceappschallenge.spacemission.roadmap.mgf.utilities.Constants;
+
 import java.io.IOException;
+
+import retrofit.RestAdapter;
 
 
 public class MainActivity extends Activity implements NavigationDrawerFragment.NavigationDrawerCallbacks {
@@ -27,6 +32,8 @@ public class MainActivity extends Activity implements NavigationDrawerFragment.N
     private static final String PREFERENCES_PROPERTY_APP_VERSION = "appVersion";
 
     private static final int PLAY_SERVICES_RESOLUTION_REQUEST = 9000;
+
+    private static SpaceMissionRoadmapAPIClient apiClient;
 
     private GoogleCloudMessaging gcm;
     private String SENDER_ID = "apps-sender-id";//TODO: provide id (project number from API Console)
@@ -69,6 +76,8 @@ public class MainActivity extends Activity implements NavigationDrawerFragment.N
         } else {
             Log.i(TAG, "No valid Google Play Services APK found.");
         }
+
+        setAPIClient(null);
 
     }
 
@@ -213,7 +222,7 @@ public class MainActivity extends Activity implements NavigationDrawerFragment.N
 
                     Log.i(TAG, "Device registered, registration ID=" + regid);
 
-                    // Send the registration ID to server
+                    // Send the registration ID to SERVER
                     sendRegistrationIdToBackend();
 
                     // Persist the regID - no need to register again.
@@ -253,10 +262,28 @@ public class MainActivity extends Activity implements NavigationDrawerFragment.N
     }
 
     /**
-     * Sends the registration ID to server over HTTP, so it can use GCM/HTTP or CCS to send
+     * Sends the registration ID to SERVER over HTTP, so it can use GCM/HTTP or CCS to send
      * messages to the app.
      */
     private void sendRegistrationIdToBackend() {
-        //TODO: send registration id to server.
+        //TODO: send registration id to SERVER.
     }
+
+    public void setAPIClient(final RestAdapter restAdapter){
+
+        if(restAdapter == null){
+
+            RestAdapter.Builder builder = new RestAdapter.Builder();
+            builder.setEndpoint(Constants.SERVER);
+            RestAdapter newRestAdapter = builder.build();
+
+            apiClient = newRestAdapter.create(SpaceMissionRoadmapAPIClient.class);
+
+        } else {
+            apiClient = (SpaceMissionRoadmapAPIClient) restAdapter;
+        }
+
+
+    }
+
 }
