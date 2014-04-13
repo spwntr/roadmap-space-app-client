@@ -3,7 +3,7 @@ package org.spaceappschallenge.spacemission.roadmap.mgf.model;
 import android.os.Parcel;
 import android.os.Parcelable;
 
-import java.util.Date;
+import org.joda.time.DateTime;
 
 public class Mission implements Parcelable {
 
@@ -21,8 +21,8 @@ public class Mission implements Parcelable {
         url   = in.readString();
         image = in.readString();
         description = in.readString();
-        launchDate.start = new Date(in.readLong());
-        launchDate.end = new Date((in.readLong()));
+        launchDate.start = new DateTime(in.readLong());
+        launchDate.end = new DateTime((in.readLong()));
         summary = in.readString();
     }
 
@@ -37,8 +37,8 @@ public class Mission implements Parcelable {
         parcel.writeString(url);
         parcel.writeString(image);
         parcel.writeString(description);
-        parcel.writeLong(launchDate.start.getTime());
-        parcel.writeLong(launchDate.end.getTime());
+        parcel.writeLong(launchDate.start.getMillis());
+        parcel.writeLong(launchDate.end.getMillis());
         parcel.writeString(summary);
     }
 
