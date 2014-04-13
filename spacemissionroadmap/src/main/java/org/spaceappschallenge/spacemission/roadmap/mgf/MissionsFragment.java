@@ -80,6 +80,7 @@ public class MissionsFragment extends Fragment {
                 FragmentManager fragmentManager = getFragmentManager();
                 fragmentManager.beginTransaction()
                         .replace(R.id.container, switchToThisFragment)
+                        .addToBackStack(null)
                         .commit();
 
             }
