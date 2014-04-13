@@ -2,9 +2,9 @@
 <resources>
 
     <string name="app_name">Space Mission Roadmap</string>
-    <string name="title_section1">Home</string>
-    <string name="title_section2">Current</string>
-    <string name="title_section3">Previous</string>
+    <string name="missions">Missions</string>
+    <string name="current_missions">Current</string>
+    <string name="past_missions">Past</string>
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
     <string name="action_example">Example action</string>

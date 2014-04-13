@@ -1,8 +1,11 @@
 package org.spaceappschallenge.spacemission.roadmap.mgf.model;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import java.util.Date;
 
-public class Mission {
+public class Mission implements Parcelable {
 
     private final String title;
     private final String url;
@@ -16,6 +19,14 @@ public class Mission {
         this.image = image;
         this.description = description;
         this.launchDate = launchDate;
+    }
+
+    public Mission(Parcel in){
+        title = in.readString();
+        url   = in.readString();
+        image = in.readString();
+        description = in.readString();
+        launchDate = new Date(in.readLong());
     }
 
     public String getTitle() {
@@ -37,4 +48,29 @@ public class Mission {
     public String getDescription() {
         return description;
     }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel parcel, int flags) {
+        parcel.writeString(title);
+        parcel.writeString(url);
+        parcel.writeString(image);
+        parcel.writeString(description);
+        parcel.writeLong(launchDate.getTime());
+    }
+
+    public static final Parcelable.Creator CREATOR = new Parcelable.Creator() {
+        public Mission createFromParcel(Parcel in) {
+            return new Mission(in);
+        }
+
+        public Mission[] newArray(int size) {
+            return new Mission[size];
+        }
+    };
+
 }

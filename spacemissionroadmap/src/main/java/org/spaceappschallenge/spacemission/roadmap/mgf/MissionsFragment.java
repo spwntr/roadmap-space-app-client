@@ -16,11 +16,15 @@ import org.spaceappschallenge.spacemission.roadmap.mgf.utilities.MissionListAdap
 import java.util.List;
 
 public class MissionsFragment extends Fragment {
+
     private String category;
+    private ListView listView;
 
     public static MissionsFragment newInstance(String category) {
         MissionsFragment fragment = new MissionsFragment();
-        fragment.category = category;
+        Bundle bundle = new Bundle();
+        bundle.putString("category", category);
+        fragment.setArguments(bundle);
         return fragment;
     }
     public MissionsFragment() {
@@ -30,22 +34,30 @@ public class MissionsFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
+            category = getArguments().getString("category");
         }
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        listView.setAdapter(new MissionListAdapter(this.getActivity().getBaseContext(), getData()));
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_missions, container, false);
+
         TextView textField = (TextView) rootView.findViewById(R.id.text_field);
+        listView = (ListView) rootView.findViewById(R.id.mission_list);
+
         if(category.equals("current")){
             textField.setText("This is current missions");
         }
         else {
-            textField.setText("This is previous missions");
+            textField.setText("This is past missions");
         }
-
-        displayMissions(rootView);
 
         return rootView;
     }
@@ -58,11 +70,6 @@ public class MissionsFragment extends Fragment {
     @Override
     public void onDetach() {
         super.onDetach();
-    }
-
-    private void displayMissions(View view) {
-        ListView listView = (ListView) view.findViewById(R.id.mission_list);
-        listView.setAdapter(new MissionListAdapter(this.getActivity().getBaseContext(), getData()));
     }
 
     private List<Mission> getData(){
