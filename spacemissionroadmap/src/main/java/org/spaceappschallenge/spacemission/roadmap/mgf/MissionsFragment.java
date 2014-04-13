@@ -1,10 +1,13 @@
 package org.spaceappschallenge.spacemission.roadmap.mgf;
 
 import android.app.Fragment;
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ListView;
 
 import org.spaceappschallenge.spacemission.roadmap.mgf.model.Mission;
@@ -57,6 +60,15 @@ public class MissionsFragment extends Fragment {
         else {
             actionbarTitle = "Past Missions";
         }
+
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int position, long l) {
+                String url = ((Mission) listView.getItemAtPosition(position)).url;
+                Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(url));
+                startActivity(browserIntent);
+            }
+        });
 
         return rootView;
     }
