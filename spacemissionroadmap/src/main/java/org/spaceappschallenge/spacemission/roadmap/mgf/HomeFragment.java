@@ -41,6 +41,7 @@ public class HomeFragment extends Fragment {
                 FragmentManager fragmentManager = getFragmentManager();
                 fragmentManager.beginTransaction()
                         .replace(R.id.container, switchToThisFragment)
+                        .addToBackStack(null)
                         .commit();
             }
         });
@@ -53,6 +54,7 @@ public class HomeFragment extends Fragment {
 
                 FragmentManager fragmentManager = getFragmentManager();
                 fragmentManager.beginTransaction()
+                        .addToBackStack(null)
                         .replace(R.id.container, switchToThisFragment)
                         .commit();
             }
