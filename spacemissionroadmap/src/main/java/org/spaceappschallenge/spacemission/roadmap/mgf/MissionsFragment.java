@@ -1,8 +1,7 @@
 package org.spaceappschallenge.spacemission.roadmap.mgf;
 
 import android.app.Fragment;
-import android.content.Intent;
-import android.net.Uri;
+import android.app.FragmentManager;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -64,10 +63,21 @@ public class MissionsFragment extends Fragment {
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int position, long l) {
-                String url = ((Mission) listView.getItemAtPosition(position)).url;
-                Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(url));
-                startActivity(browserIntent);
+
+                Mission clickedMission = (Mission) listView.getItemAtPosition(position);
+                Fragment switchToThisFragment = new IndvMissionFragment().newInstance(clickedMission);
+
+                FragmentManager fragmentManager = getFragmentManager();
+                fragmentManager.beginTransaction()
+                        .replace(R.id.container, switchToThisFragment)
+                        .commit();
             }
+//            @Override
+//            public void onItemClick(AdapterView<?> adapterView, View view, int position, long l) {
+//                String url = ((Mission) listView.getItemAtPosition(position)).url;
+//                Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(url));
+//                startActivity(browserIntent);
+//            }
         });
 
         return rootView;
