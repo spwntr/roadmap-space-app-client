@@ -1,15 +1,12 @@
 package org.spaceappschallenge.spacemission.roadmap.mgf.service;
 
+import org.joda.time.DateTime;
 import org.spaceappschallenge.spacemission.roadmap.mgf.model.Mission;
 import org.spaceappschallenge.spacemission.roadmap.mgf.model.MissionEventDate;
 
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
-/**
- * Created by thoughtworker on 4/12/14.
- */
 public class DataSource {
     private List<Mission> missionList = new ArrayList<Mission>();
 
@@ -22,8 +19,8 @@ public class DataSource {
     private List<Mission> makeFakeMissions(String category) {
 
         MissionEventDate missionEventDate = new MissionEventDate();
-        missionEventDate.start = new Date(1967, 1, 27, 18, 31, 05);
-        missionEventDate.end = new Date(1967, 1, 27, 18, 31, 05);
+        missionEventDate.start = new DateTime(1967, 1, 27, 18, 31, 05);
+        missionEventDate.end = new DateTime(1967, 1, 27, 18, 31, 05);
 
         Mission missionOne = new Mission();
         missionOne.title = category + " Apollo 1 Tragedy";
@@ -41,8 +38,8 @@ public class DataSource {
         missionList.add(missionOne);
 
         MissionEventDate missionEventDateTwo = new MissionEventDate();
-        missionEventDateTwo.start = new Date(1968, 10, 11, 11, 02, 45);
-        missionEventDateTwo.end = new Date(1968, 10, 11, 11, 02, 45);
+        missionEventDateTwo.start = new DateTime(1968, 10, 11, 11, 02, 45);
+        missionEventDateTwo.end = new DateTime(1968, 10, 11, 11, 02, 45);
 
         Mission missionTwo = new Mission();
         missionTwo.title = category + " Apollo 7";
