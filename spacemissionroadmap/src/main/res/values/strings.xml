@@ -11,5 +11,6 @@
     <string name="action_settings">Settings</string>
     <string name="this_is_home_fragment">this is home fragment</string>
     <string name="this_is_mission_fragment">this is mission fragment</string>
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 
 </resources>
