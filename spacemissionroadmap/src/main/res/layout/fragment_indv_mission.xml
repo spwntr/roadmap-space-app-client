@@ -33,9 +33,10 @@
                 android:layout_below="@+id/mission_start" />
 
             <Button
-                android:id="@+id/urlButton"
+                android:id="@+id/btn_url"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_below="@+id/mission_end"
                 android:text="web page"/>
         </RelativeLayout>
 
