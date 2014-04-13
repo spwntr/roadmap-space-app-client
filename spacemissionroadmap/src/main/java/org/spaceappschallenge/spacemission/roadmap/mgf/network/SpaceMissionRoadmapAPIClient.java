@@ -17,7 +17,7 @@ public interface SpaceMissionRoadmapAPIClient {
 
     @POST("/registration")
     public void sendRegistrationId(@Query("registration_id") String registration_id, Callback<Response> responseCallback);
-    @GET("/current")
+    @GET("/missions/nasa")
     public void getCurrentMissionData(Callback<List<Mission>> responseCallback);
     @GET("/past")
     public void getPastMissionData(Callback<List<Mission>> responseCallback);

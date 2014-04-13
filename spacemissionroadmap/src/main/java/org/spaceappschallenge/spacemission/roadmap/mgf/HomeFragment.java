@@ -1,6 +1,5 @@
 package org.spaceappschallenge.spacemission.roadmap.mgf;
 
-import android.app.Activity;
 import android.app.Fragment;
 import android.app.FragmentManager;
 import android.os.Bundle;
@@ -64,13 +63,8 @@ public class HomeFragment extends Fragment {
     }
 
     @Override
-    public void onAttach(Activity activity) {
-        super.onAttach(activity);
+    public void onResume() {
+        super.onResume();
+        getActivity().getActionBar().setTitle(getString(R.string.app_name));
     }
-
-    @Override
-    public void onDetach() {
-        super.onDetach();
-    }
-
 }
