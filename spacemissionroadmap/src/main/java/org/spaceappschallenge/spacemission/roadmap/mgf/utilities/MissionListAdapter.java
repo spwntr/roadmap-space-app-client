@@ -50,7 +50,7 @@ public class MissionListAdapter extends ArrayAdapter<Mission> {
         }
 
         Mission post = getItem(position);
-        holder.setViews(post);
+        holder.setViews(post, getContext());
 
         return convertView;
     }
