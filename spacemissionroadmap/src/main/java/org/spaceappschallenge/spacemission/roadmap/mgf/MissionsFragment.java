@@ -6,7 +6,14 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ListView;
 import android.widget.TextView;
+
+import org.spaceappschallenge.spacemission.roadmap.mgf.model.Mission;
+import org.spaceappschallenge.spacemission.roadmap.mgf.service.DataSource;
+import org.spaceappschallenge.spacemission.roadmap.mgf.utilities.MissionListAdapter;
+
+import java.util.List;
 
 public class MissionsFragment extends Fragment {
     private String category;
@@ -37,6 +44,9 @@ public class MissionsFragment extends Fragment {
         else {
             textField.setText("This is previous missions");
         }
+
+        displayMissions(rootView);
+
         return rootView;
     }
 
@@ -49,4 +59,14 @@ public class MissionsFragment extends Fragment {
     public void onDetach() {
         super.onDetach();
     }
+
+    private void displayMissions(View view) {
+        ListView listView = (ListView) view.findViewById(R.id.mission_list);
+        listView.setAdapter(new MissionListAdapter(this.getActivity().getBaseContext(), getData()));
+    }
+
+    private List<Mission> getData(){
+        return new DataSource().getMissions(category);
+    }
+
 }
