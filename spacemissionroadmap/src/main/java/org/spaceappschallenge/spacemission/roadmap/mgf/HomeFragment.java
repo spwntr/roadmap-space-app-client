@@ -2,19 +2,17 @@ package org.spaceappschallenge.spacemission.roadmap.mgf;
 
 import android.app.Fragment;
 import android.app.FragmentManager;
-import android.app.ProgressDialog;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.Window;
 import android.widget.Button;
-import android.widget.ProgressBar;
 
 import org.spaceappschallenge.spacemission.roadmap.mgf.model.Mission;
 import org.spaceappschallenge.spacemission.roadmap.mgf.model.Missions;
 import org.spaceappschallenge.spacemission.roadmap.mgf.network.SpaceMissionRoadmapAPIClient;
+import org.spaceappschallenge.spacemission.roadmap.mgf.utilities.CustomProgressDialog;
 
 import java.util.List;
 
@@ -56,13 +54,9 @@ public class HomeFragment extends Fragment {
 
                 SpaceMissionRoadmapAPIClient apiClient = ((MainActivity) getActivity()).getAPIClient();
 
-                final ProgressDialog dialog = new ProgressDialog(getActivity());
+                final CustomProgressDialog.CustomizedDialog dialog = CustomProgressDialog.generateDialog(getActivity());
 
-                dialog.setTitle(null);
-                dialog.setCancelable(false);
-                dialog.setCanceledOnTouchOutside(false);
-                dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
-                dialog.setContentView(new ProgressBar(getActivity(), null, android.R.attr.progressBarStyleLarge));
+                dialog.show();
 
                 apiClient.getCurrentMissionData(new Callback<Missions>() {
                     @Override

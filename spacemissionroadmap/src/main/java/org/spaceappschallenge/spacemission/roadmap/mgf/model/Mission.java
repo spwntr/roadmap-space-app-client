@@ -67,8 +67,15 @@ public class Mission implements Parcelable {
     public void convertDate(){
         DateTimeFormatter dateTimeFormatter = DateTimeFormat.forPattern("yyyy-MM-dd HH:mm:ss");
         launchDate = new MissionEventDate();
-        launchDate.start = dateTimeFormatter.parseDateTime(date.start);
-        launchDate.end = dateTimeFormatter.parseDateTime(date.end);
+
+        if (date != null) {
+            launchDate.start = dateTimeFormatter.parseDateTime(date.start);
+            launchDate.end = dateTimeFormatter.parseDateTime(date.end);
+        } else {
+            launchDate.start = new DateTime();
+            launchDate.end = new DateTime();
+        }
+
     }
 
     static class MissionDate {
