@@ -16,12 +16,17 @@ import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GooglePlayServicesUtil;
 import com.google.android.gms.gcm.GoogleCloudMessaging;
 
+import org.spaceappschallenge.spacemission.roadmap.mgf.model.Missions;
 import org.spaceappschallenge.spacemission.roadmap.mgf.network.SpaceMissionRoadmapAPIClient;
 import org.spaceappschallenge.spacemission.roadmap.mgf.utilities.Constants;
+import org.spaceappschallenge.spacemission.roadmap.mgf.utilities.CustomProgressDialog;
 
 import java.io.IOException;
 
+import retrofit.Callback;
 import retrofit.RestAdapter;
+import retrofit.RetrofitError;
+import retrofit.client.Response;
 
 
 public class MainActivity extends Activity implements NavigationDrawerFragment.NavigationDrawerCallbacks {
@@ -36,7 +41,7 @@ public class MainActivity extends Activity implements NavigationDrawerFragment.N
     private static SpaceMissionRoadmapAPIClient apiClient;
 
     private GoogleCloudMessaging gcm;
-    private String SENDER_ID = "apps-sender-id";//TODO: provide id (project number from API Console)
+    private String SENDER_ID = "171639698085";
     private String regid;
     private Context context;
 
@@ -86,12 +91,52 @@ public class MainActivity extends Activity implements NavigationDrawerFragment.N
     public void onNavigationDrawerItemSelected(int index) {
         // update the main content by replacing fragments
 
-        Fragment switchToThisFragment = getProperFragmentForDrawerSelection(index + 1);
+        int menuItemPosition = index + 1;
 
-        FragmentManager fragmentManager = getFragmentManager();
-        fragmentManager.beginTransaction()
-                .replace(R.id.container, switchToThisFragment)
-                .commit();
+        Fragment switchToThisFragment = getProperFragmentForDrawerSelection(menuItemPosition);
+
+        if (menuItemPosition == 2) {
+
+            final CustomProgressDialog.CustomizedDialog dialog = CustomProgressDialog.generateDialog(this);
+
+            dialog.show();
+
+            apiClient.getCurrentMissionData(new Callback<Missions>() {
+                @Override
+                public void success(Missions missions, Response response) {//TODO: persist data
+
+                    dialog.dismiss();
+
+
+                    Fragment switchToThisFragment = MissionsFragment.newInstance("current", missions.missions);
+
+                    FragmentManager fragmentManager = getFragmentManager();
+                    fragmentManager.beginTransaction()
+                            .addToBackStack(null)
+                            .replace(R.id.container, switchToThisFragment)
+                            .commitAllowingStateLoss();//TODO: should not perform transaction after network call as activity's state may have changed
+                }
+
+                @Override
+                public void failure(RetrofitError error) {//TODO: better error handling
+
+                    dialog.dismiss();
+
+                    Log.e(TAG, "Could not retrieve current missions from server.");
+
+                    if (error != null){
+                        Log.e(TAG, error.toString());
+                    }
+                }
+
+            });
+        } else{
+            FragmentManager fragmentManager = getFragmentManager();
+            fragmentManager.beginTransaction()
+                    .replace(R.id.container, switchToThisFragment)
+                    .commitAllowingStateLoss();
+        }
+
     }
 
     public void onSectionAttached(int number) {
@@ -120,7 +165,7 @@ public class MainActivity extends Activity implements NavigationDrawerFragment.N
             return HomeFragment.newInstance();
         } else {
             String arg = position == 2 ? "current" : "previous";
-            return MissionsFragment.newInstance(arg);
+            return MissionsFragment.newInstance(arg, null);//TODO:
         }
     }
 
@@ -267,7 +312,23 @@ public class MainActivity extends Activity implements NavigationDrawerFragment.N
      * messages to the app.
      */
     private void sendRegistrationIdToBackend() {
-        //TODO: send registration id to SERVER.
+        apiClient.sendRegistrationId(this.regid, new Callback<Response>() {
+            @Override
+            public void success(Response response, Response response2) {
+                Log.i(TAG, "Registration id sent to server.");
+            }
+
+            @Override
+            public void failure(RetrofitError error) {//TODO: Add better error handling
+
+                Log.e(TAG, "Error registering id with server.");
+
+                if (error != null){
+                    Log.e(TAG, error.toString());
+                }
+
+            }
+        });
     }
 
     public void setAPIClient(final RestAdapter restAdapter){
@@ -284,7 +345,10 @@ public class MainActivity extends Activity implements NavigationDrawerFragment.N
             apiClient = (SpaceMissionRoadmapAPIClient) restAdapter;
         }
 
+    }
 
+    public SpaceMissionRoadmapAPIClient getAPIClient(){
+        return apiClient;
     }
 
 }
