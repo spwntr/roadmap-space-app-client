@@ -36,13 +36,8 @@ public class HomeFragment extends Fragment {
         btn_current_missions.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Fragment switchToThisFragment = MissionsFragment.newInstance("current");
-
-                FragmentManager fragmentManager = getFragmentManager();
-                fragmentManager.beginTransaction()
-                        .replace(R.id.container, switchToThisFragment)
-                        .addToBackStack(null)
-                        .commit();
+                String category = "current";
+                setFragment(category);
             }
         });
 
@@ -50,17 +45,22 @@ public class HomeFragment extends Fragment {
         btn_previous_missions.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Fragment switchToThisFragment = MissionsFragment.newInstance("previous");
-
-                FragmentManager fragmentManager = getFragmentManager();
-                fragmentManager.beginTransaction()
-                        .addToBackStack(null)
-                        .replace(R.id.container, switchToThisFragment)
-                        .commit();
+                String category = "previous";
+                setFragment(category);
             }
         });
 
         return rootView;
+    }
+
+    private void setFragment(String category) {
+        Fragment switchToThisFragment = MissionsFragment.newInstance(category);
+
+        FragmentManager fragmentManager = getFragmentManager();
+        fragmentManager.beginTransaction()
+                .addToBackStack(null)
+                .replace(R.id.container, switchToThisFragment)
+                .commit();
     }
 
     @Override

@@ -3,6 +3,7 @@ package org.spaceappschallenge.spacemission.roadmap.mgf.model;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
 public class Mission implements Parcelable {
@@ -41,8 +42,12 @@ public class Mission implements Parcelable {
         return image;
     }
 
-    public Date getLaunchDate() {
-        return launchDate;
+    public String getLaunchDate() {
+        return new SimpleDateFormat("MM/dd/yyyy").format(launchDate);
+    }
+
+    public String getLaunchTime() {
+        return new SimpleDateFormat("hh:mm:ss a").format(launchDate);
     }
 
     public String getDescription() {

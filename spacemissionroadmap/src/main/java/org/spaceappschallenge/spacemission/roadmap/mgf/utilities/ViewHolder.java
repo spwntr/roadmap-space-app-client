@@ -22,7 +22,7 @@ public class ViewHolder {
     }
     public void setViews(final Mission mission, final Context context) {
         missionTitle.setText(mission.getTitle());
-        missionLaunchDate.setText(mission.getLaunchDate().toString());
+        missionLaunchDate.setText(mission.getLaunchDate());
 
        final String thumbUrl = mission.getImage();
 

@@ -29,12 +29,12 @@ public class DataSource {
                         "In the spring of 1967, NASA's Associate Administrator for Manned Space Flight, Dr. George E. Mueller, announced that the mission originally scheduled for Grissom, White and Chaffee would be known as Apollo 1, and said that the first Saturn V launch, scheduled for November 1967, would be known as Apollo 4. The eventual launch of AS-204 became known as the Apollo 5 mission. No missions or flights were ever designated Apollo 2 or 3.\n" +
                         "\n" +
                         "The second launch of a Saturn V took place on schedule in the early morning of April 4, 1968. Known as AS-502, or Apollo 6, the flight was a success, though two first-stage engines shut down prematurely, and the third-stage engine failed to reignite after reaching orbit.",
-                        new Date(1967, 1, 27, 18, 31, 05)));
+                        new Date(67, 1, 27, 18, 31, 05)));
         missionList.add(new Mission(category + " Apollo 7",
                 "http://www.nasa.gov/mission_pages/apollo/missions/apollo7.html",
                 "http://www.nasa.gov/images/content/338804main_07-lg.jpg",
                 "The primary objectives for the Apollo 7 engineering test flight were simple: Demonstrate command and service module, or CSM, and crew performance; demonstrate crew, space vehicle and mission support facilities performance during a crewed CSM mission; and demonstrate CSM rendezvous capability.",
-                new Date(1968, 10, 11, 11, 02, 45)));
+                new Date(68, 10, 11, 11, 02, 45)));
         return missionList;
     }
 }
