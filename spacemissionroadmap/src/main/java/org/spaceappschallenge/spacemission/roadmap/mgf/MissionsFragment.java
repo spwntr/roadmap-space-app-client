@@ -42,7 +42,7 @@ public class MissionsFragment extends Fragment {
             textField.setText("This is current missions");
         }
         else {
-            textField.setText("This is previous missions");
+            textField.setText("This is past missions");
         }
 
         displayMissions(rootView);
