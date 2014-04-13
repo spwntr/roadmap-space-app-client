@@ -6,11 +6,6 @@
     tools:context="org.spaceappschallenge.spacemission.roadmap.mgf.MissionsFragment"
     android:layout_margin="@dimen/activity_horizontal_margin">
 
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/text_field"
-        android:text="@string/this_is_mission_fragment" />
     <ListView
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"

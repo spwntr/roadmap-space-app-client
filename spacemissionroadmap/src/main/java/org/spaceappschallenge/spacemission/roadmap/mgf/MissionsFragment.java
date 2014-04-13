@@ -1,13 +1,11 @@
 package org.spaceappschallenge.spacemission.roadmap.mgf;
 
-import android.app.Activity;
 import android.app.Fragment;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ListView;
-import android.widget.TextView;
 
 import org.spaceappschallenge.spacemission.roadmap.mgf.model.Mission;
 import org.spaceappschallenge.spacemission.roadmap.mgf.service.DataSource;
@@ -19,6 +17,7 @@ public class MissionsFragment extends Fragment {
 
     private String category;
     private ListView listView;
+    private String actionbarTitle;
 
     public static MissionsFragment newInstance(String category) {
         MissionsFragment fragment = new MissionsFragment();
@@ -42,6 +41,7 @@ public class MissionsFragment extends Fragment {
     public void onResume() {
         super.onResume();
         listView.setAdapter(new MissionListAdapter(this.getActivity().getBaseContext(), getData()));
+        getActivity().getActionBar().setTitle(actionbarTitle);
     }
 
     @Override
@@ -49,27 +49,16 @@ public class MissionsFragment extends Fragment {
                              Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_missions, container, false);
 
-        TextView textField = (TextView) rootView.findViewById(R.id.text_field);
         listView = (ListView) rootView.findViewById(R.id.mission_list);
 
         if(category.equals("current")){
-            textField.setText("This is current missions");
+            actionbarTitle = "Current Missions";
         }
         else {
-            textField.setText("This is past missions");
+            actionbarTitle = "Past Missions";
         }
 
         return rootView;
-    }
-
-    @Override
-    public void onAttach(Activity activity) {
-        super.onAttach(activity);
-    }
-
-    @Override
-    public void onDetach() {
-        super.onDetach();
     }
 
     private List<Mission> getData(){

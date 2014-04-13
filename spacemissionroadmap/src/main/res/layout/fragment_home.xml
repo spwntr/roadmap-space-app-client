@@ -4,21 +4,20 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:layout_margin="@dimen/activity_horizontal_margin"
+    android:gravity="center"
     tools:context="org.spaceappschallenge.spacemission.roadmap.mgf.HomeFragment">
-
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="@string/this_is_home_fragment" />
 
     <Button
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:id="@+id/btn_current_missions"
-        android:text="Current Missions"/>
+        android:text="Current Missions"
+        style="@style/Theme.SpaceApps.Button"
+        android:layout_marginBottom="8dp"/>
     <Button
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:id="@+id/btn_previous_missions"
-        android:text="Previous Missions"/>
+        android:text="Past Missions"
+        style="@style/Theme.SpaceApps.Button"/>
 </LinearLayout>

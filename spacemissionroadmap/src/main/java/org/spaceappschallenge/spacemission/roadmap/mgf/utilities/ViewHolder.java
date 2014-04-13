@@ -21,10 +21,10 @@ public class ViewHolder {
         thumbnailView = (ImageView) convertView.findViewById(R.id.list_image);
     }
     public void setViews(final Mission mission, final Context context) {
-        missionTitle.setText(mission.getTitle());
-        missionLaunchDate.setText(mission.getLaunchDate());
+        missionTitle.setText(mission.title);
+        missionLaunchDate.setText(mission.launchDate.toString());
 
-       final String thumbUrl = mission.getImage();
+       final String thumbUrl = mission.image;
 
         if (thumbUrl != null && !thumbUrl.isEmpty() && thumbUrl.length() > 1){
             Picasso.with(context).load(thumbUrl).skipMemoryCache().fit().into(thumbnailView);
