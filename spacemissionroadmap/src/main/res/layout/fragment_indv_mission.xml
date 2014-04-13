@@ -39,7 +39,7 @@
             android:layout_alignParentRight="true"
             android:layout_width="150dp"
             android:layout_height="150dp"
-            android:src="@drawable/NASA_LOGO"
+            android:src="@drawable/nasalogo"
             android:id="@+id/imageView" />
     </RelativeLayout>
 
