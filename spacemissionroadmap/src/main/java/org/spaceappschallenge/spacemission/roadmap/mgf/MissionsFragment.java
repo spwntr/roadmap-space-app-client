@@ -76,7 +76,7 @@ public class MissionsFragment extends Fragment {
             public void onItemClick(AdapterView<?> adapterView, View view, int position, long l) {
                 String url = ((Mission) listView.getItemAtPosition(position)).url;
                 Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(url));
-                startActivity(browserIntent);
+                getActivity().startActivity(browserIntent);
             }
         });
 
