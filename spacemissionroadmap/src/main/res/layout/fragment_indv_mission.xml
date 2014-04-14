@@ -15,28 +15,72 @@
             android:layout_alignParentTop="true"
             android:layout_toLeftOf="@+id/imageView">
 
-            <TextView
-                android:id="@+id/mission_title"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
-
-            <TextView
-                android:id="@+id/mission_start"
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/mission_title" />
+                android:orientation="vertical"
+                android:id="@+id/mission_title_group">
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/mission_title_header"
+                    android:text="Mission:"
+                    android:textStyle="bold" />
 
-            <TextView
-                android:id="@+id/mission_end"
+                <TextView
+                    android:id="@+id/mission_title"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/mission_title_header"/>
+            </LinearLayout>
+
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/mission_start" />
+                android:orientation="vertical"
+                android:layout_below="@+id/mission_title_group"
+                android:id="@+id/mission_start_group">
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/mission_start_header"
+                    android:text="Launch:"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/mission_start"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/mission_title_header" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:layout_below="@+id/mission_start_group"
+                android:id="@+id/mission_end_group">
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/mission_end_header"
+                    android:text="End:"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/mission_end"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/mission_end_header" />
+            </LinearLayout>
+
+
 
             <Button
                 android:id="@+id/btn_url"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/mission_end"
+                android:layout_below="@+id/mission_end_group"
                 android:text="web page"/>
         </RelativeLayout>
 
