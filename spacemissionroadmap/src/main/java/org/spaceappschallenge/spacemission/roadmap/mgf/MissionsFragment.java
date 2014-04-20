@@ -75,7 +75,7 @@ public class MissionsFragment extends Fragment {
             public void onItemClick(AdapterView<?> adapterView, View view, int position, long l) {
 
                 Mission clickedMission = (Mission) listView.getItemAtPosition(position);
-                Fragment switchToThisFragment = new IndvMissionFragment().newInstance(clickedMission);
+                Fragment switchToThisFragment = new IndividualMissionFragment().newInstance(clickedMission);
 
                 FragmentManager fragmentManager = getFragmentManager();
                 fragmentManager.beginTransaction()

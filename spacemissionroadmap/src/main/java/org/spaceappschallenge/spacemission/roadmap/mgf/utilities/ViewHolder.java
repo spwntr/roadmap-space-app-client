@@ -30,7 +30,7 @@ public class ViewHolder {
        final String thumbUrl = mission.image;
 
         if (thumbUrl != null && !thumbUrl.isEmpty() && thumbUrl.length() > 1){
-            Picasso.with(context).load(thumbUrl).skipMemoryCache().fit().into(thumbnailView);
+            Picasso.with(context).load(thumbUrl).fit().into(thumbnailView);
         }
     }
 }

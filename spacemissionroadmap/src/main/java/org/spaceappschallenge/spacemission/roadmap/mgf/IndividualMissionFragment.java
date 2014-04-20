@@ -15,15 +15,15 @@ import com.squareup.picasso.Picasso;
 
 import org.spaceappschallenge.spacemission.roadmap.mgf.model.Mission;
 
-public class IndvMissionFragment extends Fragment {
+public class IndividualMissionFragment extends Fragment {
     Mission mission;
 
-    public static IndvMissionFragment newInstance(Mission clickedMission) {
-        IndvMissionFragment fragment = new IndvMissionFragment();
+    public static IndividualMissionFragment newInstance(Mission clickedMission) {
+        IndividualMissionFragment fragment = new IndividualMissionFragment();
         fragment.mission = clickedMission;
         return fragment;
     }
-    public IndvMissionFragment() {
+    public IndividualMissionFragment() {
     }
 
     @Override
@@ -38,9 +38,9 @@ public class IndvMissionFragment extends Fragment {
                              Bundle savedInstanceState) {
         View rootView =  inflater.inflate(R.layout.fragment_indv_mission, container, false);
 
-        if(mission.url != null){
+        if(mission != null && mission.image != null){
             ImageView imageView = ((ImageView) rootView.findViewById(R.id.imageView));
-            Picasso.with(getActivity()).load(mission.image).skipMemoryCache().fit().into(imageView);
+            Picasso.with(getActivity()).load(mission.image).fit().into(imageView);
         }
         ((TextView) rootView.findViewById(R.id.mission_title)).setText(mission.title);
         ((TextView) rootView.findViewById(R.id.mission_start)).setText(mission.launchDate.startToString());
